@@ -15,7 +15,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const mainMenu = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: ClipboardList, label: "Exams", href: "/dashboard/exams" },
-  { icon: Users, label: "Students" },
+  { icon: Users, label: "Students Registry", href: "/dashboard/studentregister" },
   { icon: FileText, label: "Results" },
   { icon: BarChart3, label: "Analytics" },
   { icon: HelpCircle, label: "Support" },

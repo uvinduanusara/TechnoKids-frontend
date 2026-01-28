@@ -1,6 +1,7 @@
-import { useState } from 'react';
-import { useLoginMutation } from '../lib/apiSlice';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { useLoginMutation } from "../lib/apiSlice";
+import { useNavigate } from "react-router-dom";
+import { decodeToken } from "../lib/utils";
 
 // Shadcn UI Imports
 import { Button } from "@/components/ui/button";
@@ -16,8 +17,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
 
@@ -25,9 +26,15 @@ export default function Login() {
     e.preventDefault();
     try {
       const user = await login({ email, password }).unwrap();
-      localStorage.setItem('token', user.access_token);
-      localStorage.setItem('role', user.role);
-      navigate('/dashboard');
+      localStorage.setItem("token", user.access_token);
+
+      // Decode token to extract role from JWT payload
+      const decoded = decodeToken(user.access_token);
+      if (decoded?.role) {
+        localStorage.setItem("role", decoded.role);
+      }
+
+      navigate("/dashboard");
     } catch (err) {
       alert("Login failed. Check your NestJS console.");
     }
@@ -48,29 +55,29 @@ export default function Login() {
           <CardContent className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input 
+              <Input
                 id="email"
-                type="email" 
-                placeholder="Enter your Email" 
+                type="email"
+                placeholder="Enter your Email"
                 required
                 className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                onChange={(e) => setEmail(e.target.value)} 
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input 
+              <Input
                 id="password"
-                type="password" 
-                placeholder='Enter your Password'
+                type="password"
+                placeholder="Enter your Password"
                 required
                 className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                onChange={(e) => setPassword(e.target.value)} 
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </CardContent>
-          <CardFooter className='mt-4'>
-            <Button 
+          <CardFooter className="mt-4">
+            <Button
               type="submit"
               disabled={isLoading}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all"

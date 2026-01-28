@@ -3,6 +3,7 @@ import Login from "./pages/Login";
 import DashboardLayout from "./layouts/DashboardLayout";
 import ExamPage from "../src/pages/ExamsPage";
 import { DashboardContent } from "./pages/dashboard-content";
+import Register from "./pages/Register";
 // import Overview from './pages/Overview';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
           {/* <Route index element={<Overview />} /> */}
           <Route index element={<DashboardContent />} />
           <Route path="exams" element={<ExamPage />} />
+          <Route path="studentregister" element={<Register />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/dashboard" />} />

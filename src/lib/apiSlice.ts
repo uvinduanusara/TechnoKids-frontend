@@ -4,15 +4,20 @@ export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000", // Your NestJS URL
-    prepareHeaders: (headers) => {
+    prepareHeaders: (headers, { endpoint }) => {
       const token = localStorage.getItem("token");
       const role = localStorage.getItem("role");
+
+      // Always send authorization header if token exists
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-      if (role) {
+
+      // Only send role header for authenticated endpoints (not login/register)
+      if (role && endpoint !== "login" && endpoint !== "register") {
         headers.set("role", role);
       }
+
       return headers;
     },
   }),
@@ -24,7 +29,14 @@ export const apiSlice = createApi({
         body: credentials,
       }),
     }),
+    register: builder.mutation({
+      query: (credentials) => ({
+        url: "/auth/register", // Your NestJS register endpoint
+        method: "POST",
+        body: credentials,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation } = apiSlice;
+export const { useLoginMutation, useRegisterMutation } = apiSlice;
