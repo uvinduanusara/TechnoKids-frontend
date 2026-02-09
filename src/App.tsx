@@ -4,6 +4,9 @@ import DashboardLayout from "./layouts/DashboardLayout";
 import ExamPage from "../src/pages/ExamsPage";
 import { DashboardContent } from "./pages/dashboard-content";
 import Register from "./pages/Register";
+import CreateExam from "./pages/CreateExam";
+import CoursesPage from "./pages/CoursesPage";
+import { Toaster } from "@/components/ui/sonner";
 // import Overview from './pages/Overview';
 
 export default function App() {
@@ -25,10 +28,13 @@ export default function App() {
           <Route index element={<DashboardContent />} />
           <Route path="exams" element={<ExamPage />} />
           <Route path="studentregister" element={<Register />} />
+          <Route path="exams/create" element={<CreateExam />} />
+          <Route path="courses" element={<CoursesPage />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/dashboard" />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   );
 }

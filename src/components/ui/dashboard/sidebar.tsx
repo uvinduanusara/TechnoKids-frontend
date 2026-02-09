@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import {
   Home,
   FileText,
+  BookOpen,
   Users,
   HelpCircle,
   BarChart3,
@@ -15,6 +16,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 const mainMenu = [
   { icon: Home, label: "Dashboard", href: "/dashboard" },
   { icon: ClipboardList, label: "Exams", href: "/dashboard/exams" },
+  { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
   { icon: Users, label: "Students Registry", href: "/dashboard/studentregister" },
   { icon: FileText, label: "Results" },
   { icon: BarChart3, label: "Analytics" },
@@ -25,6 +27,14 @@ const mainMenu = [
 export function Sidebar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const role = localStorage.getItem("role");
+
+  const filteredMenu = mainMenu.filter((item) => {
+    if (item.label === "Students Registry") {
+      return role === "TEACHER";
+    }
+    return true;
+  });
 
   const isActive = (href: string | undefined) => {
     if (!href) return false;
@@ -56,7 +66,7 @@ export function Sidebar() {
           Main Menu
         </p>
         <nav className="flex flex-col gap-1">
-          {mainMenu.map((item) => (
+          {filteredMenu.map((item) => (
             <button
               key={item.label}
               onClick={() => item.href && navigate(item.href)}

@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
 export default function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [login, { isLoading }] = useLoginMutation();
   const navigate = useNavigate();
@@ -25,7 +25,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const user = await login({ email, password }).unwrap();
+      const user = await login({ username, password }).unwrap();
       localStorage.setItem("token", user.access_token);
 
       // Decode token to extract role from JWT payload
@@ -54,14 +54,14 @@ export default function Login() {
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="username">Username</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="Enter your Email"
+                id="username"
+                type="text"
+                placeholder="Enter your Username"
                 required
                 className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="space-y-2">

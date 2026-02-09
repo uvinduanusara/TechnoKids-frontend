@@ -13,22 +13,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+
+import { toast } from "sonner";
 
 export default function Register() {
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     name: "",
-    email: "",
+    username: "",
     password: "",
     confirmPassword: "",
-    role: "STUDENT", // Default role - uppercase to match backend enum
-  });
+    role: "STUDENT",
+    address: "",
+    dob: "",
+    grade: "",
+    level: "",
+    contactNo: "",
+    whatsappNo: "",
+  };
+
+  const [formData, setFormData] = useState(initialFormData);
 
   const [register, { isLoading }] = useRegisterMutation();
   const navigate = useNavigate();
@@ -36,93 +39,92 @@ export default function Register() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.password !== formData.confirmPassword) {
-      return alert("Passwords do not match!");
+      return toast.error("Passwords do not match!");
     }
 
     try {
-      // Send role to your NestJS backend
       await register({
         name: formData.name,
-        email: formData.email,
+        username: formData.username,
         password: formData.password,
         role: formData.role,
+        address: formData.address,
+        dob: formData.dob,
+        grade: formData.grade,
+        level: formData.level,
+        contactNo: formData.contactNo,
+        whatsappNo: formData.whatsappNo,
       }).unwrap();
 
-      alert("Registration successful!");
-      navigate("/dashboard/studentregister");
+      toast.success("Student registered successfully!");
+      setFormData(initialFormData);
+      // Stay on the same page to register more students
+      // navigate("/dashboard/studentregister"); 
     } catch (err: any) {
-      // Log detailed error information
       console.error("Registration error:", err);
       const errorMessage =
         err?.data?.message || err?.message || "Registration failed.";
-      alert(errorMessage);
+      toast.error(errorMessage);
     }
   };
 
   return (
-    <div className="flex h-screen items-center justify-center">
-      <Card className="w-full max-w-md bg-zinc-900 border-zinc-800 text-zinc-100">
-        <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight text-blue-500">
-            Regitration Form
-          </CardTitle>
+    <div className="flex flex-col space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-2xl font-bold tracking-tight">Student Registry</h2>
+          <p className="text-muted-foreground">
+            Register new students to the system.
+          </p>
+        </div>
+      </div>
+
+      <Card className="bg-zinc-900 border-zinc-800 text-zinc-100">
+        <CardHeader>
+          <CardTitle className="text-xl">Registration Form</CardTitle>
           <CardDescription className="text-zinc-400">
-            Select your role and enter details
+            Enter student details to create a new account.
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleRegister}>
           <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Select
-                onValueChange={(value) =>
-                  setFormData({ ...formData, role: value })
-                }
-                defaultValue={formData.role}
-              >
-                <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                  <SelectValue placeholder="Select a role" />
-                </SelectTrigger>
-                <SelectContent className="bg-zinc-800 border-zinc-700 text-white">
-                  <SelectItem value="STUDENT">Student</SelectItem>
-                  <SelectItem value="TEACHER">Teacher / Admin</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="name">Full Name</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  placeholder="Enter full name"
+                  required
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="name">Full Name</Label>
-              <Input
-                id="name"
-                placeholder="Enter your name"
-                required
-                className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
-            </div>
+              <div className="space-y-2">
+                <Label htmlFor="username">Username</Label>
+                <Input
+                  id="username"
+                  type="text"
+                  value={formData.username}
+                  placeholder="Enter username"
+                  required
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, username: e.target.value })
+                  }
+                />
+              </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="Enter your email"
-                required
-                className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
-                onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
-                }
-              />
-            </div>
-
-            <div className="space-y-2">
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
                 <Input
                   id="password"
                   type="password"
-                  placeholder="Enter your password"
+                  value={formData.password}
+                  placeholder="Enter password"
                   required
                   className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
                   onChange={(e) =>
@@ -130,12 +132,14 @@ export default function Register() {
                   }
                 />
               </div>
+
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm</Label>
+                <Label htmlFor="confirmPassword">Confirm Password</Label>
                 <Input
                   id="confirmPassword"
                   type="password"
-                  placeholder="Enter your password"
+                  value={formData.confirmPassword}
+                  placeholder="Confirm password"
                   required
                   className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
                   onChange={(e) =>
@@ -146,15 +150,93 @@ export default function Register() {
                   }
                 />
               </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="address">Address</Label>
+                <Input
+                  id="address"
+                  value={formData.address}
+                  placeholder="Enter address"
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, address: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="dob">Date of Birth</Label>
+                <Input
+                  id="dob"
+                  type="date"
+                  value={formData.dob}
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, dob: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="grade">Grade</Label>
+                <Input
+                  id="grade"
+                  value={formData.grade}
+                  placeholder="Enter grade"
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, grade: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="level">Level</Label>
+                <Input
+                  id="level"
+                  value={formData.level}
+                  placeholder="Enter level"
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, level: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="contactNo">Contact No</Label>
+                <Input
+                  id="contactNo"
+                  value={formData.contactNo}
+                  placeholder="Enter contact number"
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, contactNo: e.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="whatsappNo">WhatsApp No</Label>
+                <Input
+                  id="whatsappNo"
+                  value={formData.whatsappNo}
+                  placeholder="Enter WhatsApp number"
+                  className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                  onChange={(e) =>
+                    setFormData({ ...formData, whatsappNo: e.target.value })
+                  }
+                />
+              </div>
             </div>
           </CardContent>
-          <CardFooter className="flex flex-col space-y-4 pt-4">
+          <CardFooter className="flex justify-end pt-4">
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all w-full md:w-auto"
             >
-              {isLoading ? "Creating Account..." : "Register"}
+              {isLoading ? "Creating Account..." : "Register Student"}
             </Button>
           </CardFooter>
         </form>
