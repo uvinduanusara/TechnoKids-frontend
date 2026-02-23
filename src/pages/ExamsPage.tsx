@@ -35,7 +35,7 @@ export default function ExamsContent() {
           </div>
           <Button
             onClick={() => navigate("/dashboard/exams/create")}
-            className="bg-blue-600 hover:bg-blue-700 text-white gap-2"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2"
           >
             <Plus className="w-4 h-4" />
             Add New Exam
@@ -57,25 +57,25 @@ export default function ExamsContent() {
         ) : (
           <div className="space-y-4">
             {exams.map((exam: any) => (
-              <Card key={exam.id} className="bg-zinc-900 border-zinc-800 transition-colors hover:bg-zinc-900/50">
+              <Card key={exam.id} className="bg-card border-border transition-all hover:shadow-md hover:border-primary/20">
                 <CardContent className="p-4 flex items-center justify-between">
                   <div className="flex flex-col gap-1">
                     <div className="flex items-center gap-2">
-                      <span className="text-lg font-semibold text-zinc-100">
+                      <span className="text-lg font-semibold text-foreground">
                         {exam.title}
                       </span>
-                      <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/20">
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/20">
                         {exam.course?.title || "No Course"}
                       </Badge>
                     </div>
 
-                    <div className="flex items-center gap-4 text-sm text-zinc-400">
+                    <div className="flex items-center gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-1">
                         <HelpCircle className="w-4 h-4" />
                         <span>{exam._count?.questions || 0} Questions</span>
                       </div>
                       {exam.description && (
-                        <span className="line-clamp-1 max-w-[300px] text-zinc-500">
+                        <span className="line-clamp-1 max-w-[300px] text-muted-foreground/80">
                           {exam.description}
                         </span>
                       )}
@@ -83,7 +83,7 @@ export default function ExamsContent() {
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm" className="gap-2 border-zinc-700 hover:bg-zinc-800">
+                    <Button variant="outline" size="sm" className="gap-2 border-input hover:bg-accent hover:text-accent-foreground">
                       <Eye className="w-4 h-4" />
                       View
                     </Button>

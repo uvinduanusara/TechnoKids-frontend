@@ -29,7 +29,7 @@ export function StatCard({
             <span
               className={cn(
                 "flex items-center gap-0.5 text-sm font-medium",
-                isPositive ? "text-emerald-500" : "text-red-500",
+                isPositive ? "text-accent" : "text-[#FF6B6B]",
               )}
             >
               {isPositive ? (

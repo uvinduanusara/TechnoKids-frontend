@@ -18,6 +18,7 @@ const mainMenu = [
   { icon: ClipboardList, label: "Exams", href: "/dashboard/exams" },
   { icon: BookOpen, label: "Courses", href: "/dashboard/courses" },
   { icon: Users, label: "Students Registry", href: "/dashboard/studentregister" },
+  { icon: Users, label: "All Students", href: "/dashboard/students" },
   { icon: FileText, label: "Results" },
   { icon: BarChart3, label: "Analytics" },
   { icon: HelpCircle, label: "Support" },
@@ -30,7 +31,7 @@ export function Sidebar() {
   const role = localStorage.getItem("role");
 
   const filteredMenu = mainMenu.filter((item) => {
-    if (item.label === "Students Registry") {
+    if (item.label === "Students Registry" || item.label === "All Students") {
       return role === "TEACHER";
     }
     return true;
@@ -51,8 +52,8 @@ export function Sidebar() {
       {/* Header */}
       <div className="flex items-center justify-between p-4 pb-6">
         <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center">
-            <GraduationCap className="w-5 h-5 text-foreground" />
+          <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shadow-md">
+            <GraduationCap className="w-5 h-5 text-primary-foreground" />
           </div>
         </div>
         <button className="p-2 hover:bg-accent rounded-lg transition-colors">
@@ -74,8 +75,8 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 px-3 py-2 text-sm rounded-lg transition-colors text-left",
                 isActive(item.href)
-                  ? "bg-yellow-100 text-foreground font-medium"
-                  : "text-foreground/80 hover:bg-accent",
+                  ? "bg-primary/10 text-primary font-medium"
+                  : "text-foreground/80 hover:bg-secondary/20",
                 !item.href && "opacity-50 cursor-not-allowed",
               )}
             >
@@ -83,7 +84,7 @@ export function Sidebar() {
                 className={cn(
                   "w-4 h-4",
                   isActive(item.href)
-                    ? "text-foreground"
+                    ? "text-primary"
                     : "text-muted-foreground",
                 )}
               />

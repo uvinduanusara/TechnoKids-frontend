@@ -5,9 +5,9 @@ import { Link } from "react-router-dom"
 
 
 const stats = [
-  { title: "Total students", value: "1,240", change: 12, trend: "up" as const, sparklineColor: "#22c55e" },
-  { title: "Total exams", value: "48", change: 8, trend: "up" as const, sparklineColor: "#a855f7" },
-  { title: "Pass rate", value: "82%", change: 3, trend: "up" as const, sparklineColor: "#22c55e" },
+  { title: "Total students", value: "1,240", change: 12, trend: "up" as const, sparklineColor: "#4F46E5" },
+  { title: "Total exams", value: "48", change: 8, trend: "up" as const, sparklineColor: "#FF6B6B" },
+  { title: "Pass rate", value: "82%", change: 3, trend: "up" as const, sparklineColor: "#4ADE80" },
 ]
 
 const recentActivity = [
@@ -34,11 +34,11 @@ export function DashboardContent() {
             <p className="text-muted-foreground">Here's what's happening with your exams today.</p>
           </div>
           <div className="flex items-center gap-3">
-            <Button variant="outline" className="gap-2 bg-transparent">
+            <Button variant="outline" className="gap-2 bg-transparent text-primary hover:text-primary hover:bg-primary/5 border-primary/20">
               <Calendar className="w-4 h-4" />
               Select Dates
             </Button>
-            <Button variant="outline" className="gap-2 bg-transparent">
+            <Button variant="outline" className="gap-2 bg-transparent text-primary hover:text-primary hover:bg-primary/5 border-primary/20">
               <Filter className="w-4 h-4" />
               Filter
             </Button>
@@ -56,13 +56,13 @@ export function DashboardContent() {
       {/* Content Grid */}
       <div className="grid grid-cols-2 gap-6">
         {/* Recent Activity */}
-        <div className="bg-card border border-border rounded-xl p-6">
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
           <h2 className="text-lg font-semibold text-foreground mb-4">Recent Activity</h2>
           <div className="space-y-4">
             {recentActivity.map((activity, index) => (
               <div key={index} className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
-                  <activity.icon className="w-5 h-5 text-muted-foreground" />
+                <div className="w-10 h-10 rounded-lg bg-secondary/30 flex items-center justify-center">
+                  <activity.icon className="w-5 h-5 text-primary" />
                 </div>
                 <div className="flex-1">
                   <p className="text-sm font-medium text-foreground">{activity.title}</p>
@@ -74,16 +74,16 @@ export function DashboardContent() {
         </div>
 
         {/* Upcoming Exams */}
-        <div className="bg-card border border-border rounded-xl p-6">
+        <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-foreground">Upcoming Exams</h2>
-            <Link to="/exams" className="text-sm text-blue-600 hover:underline">
+            <Link to="/exams" className="text-sm text-primary hover:underline">
               View All
             </Link>
           </div>
           <div className="space-y-4">
             {upcomingExams.map((exam, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 bg-secondary/10 rounded-lg border border-secondary/20">
                 <div>
                   <p className="text-xs text-muted-foreground mb-1">{exam.subject}</p>
                   <p className="text-sm font-medium text-foreground">{exam.title}</p>

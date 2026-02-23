@@ -21,7 +21,7 @@ export const apiSlice = createApi({
       return headers;
     },
   }),
-  tagTypes: ["Exams"],
+  tagTypes: ["Exams", "Courses", "Students"],
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
@@ -58,6 +58,33 @@ export const apiSlice = createApi({
       }),
       invalidatesTags: ["Exams"],
     }),
+    getStudents: builder.query({
+      query: () => "/auth/students",
+      providesTags: ["Students"],
+    }),
+    updateStudent: builder.mutation({
+      query: ({ id, ...data }) => ({
+        url: `/auth/students/${id}`,
+        method: "PATCH",
+        body: data,
+      }),
+      invalidatesTags: ["Students"],
+    }),
+    enrollStudent: builder.mutation({
+      query: ({ courseId, studentId }) => ({
+        url: "/courses/enroll",
+        method: "POST",
+        body: { courseId, studentId },
+      }),
+      invalidatesTags: ["Students", "Courses"],
+    }),
+    deleteStudent: builder.mutation({
+      query: (id) => ({
+        url: `/auth/students/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Students"],
+    }),
   }),
 });
 
@@ -68,4 +95,8 @@ export const {
   useCreateQuizMutation,
   useGetAllExamsQuery,
   useDeleteQuizMutation,
+  useGetStudentsQuery,
+  useUpdateStudentMutation,
+  useEnrollStudentMutation,
+  useDeleteStudentMutation,
 } = apiSlice;

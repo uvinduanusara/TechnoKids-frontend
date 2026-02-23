@@ -29,22 +29,22 @@ export default function CoursesPage() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {courses.map((course: any) => (
-                            <Card key={course.id} className="bg-zinc-900 border-zinc-800 transition-colors hover:bg-zinc-900/50 flex flex-col">
+                            <Card key={course.id} className="bg-card border-border transition-all hover:shadow-md hover:border-primary/20 flex flex-col">
                                 <CardHeader>
                                     <div className="flex justify-between items-start mb-2">
-                                        <Badge variant="secondary" className="bg-blue-500/10 text-blue-400 hover:bg-blue-500/20">
+                                        <Badge variant="secondary" className="bg-primary/10 text-primary hover:bg-primary/20">
                                             Level {course.level || "N/A"}
                                         </Badge>
-                                        <span className="flex items-center text-green-400 font-medium text-sm">
+                                        <span className="flex items-center text-accent font-medium text-sm">
                                             <DollarSign className="w-4 h-4 mr-0.5" />
                                             {course.price || "Free"}
                                         </span>
                                     </div>
-                                    <CardTitle className="text-xl text-zinc-100 line-clamp-1">{course.title}</CardTitle>
-                                    <CardDescription className="line-clamp-2 mt-2">{course.description}</CardDescription>
+                                    <CardTitle className="text-xl text-foreground line-clamp-1">{course.title}</CardTitle>
+                                    <CardDescription className="line-clamp-2 mt-2 text-muted-foreground">{course.description}</CardDescription>
                                 </CardHeader>
                                 <CardContent className="mt-auto">
-                                    <div className="flex items-center gap-4 text-sm text-zinc-400 mb-4">
+                                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
                                         <div className="flex items-center gap-1">
                                             <Users className="w-4 h-4" />
                                             <span>{course.enrollments?.length || 0} Students</span>
@@ -54,7 +54,7 @@ export default function CoursesPage() {
                                             <span>{course.grade || "Grade N/A"}</span>
                                         </div>
                                     </div>
-                                    <Button className="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-100" variant="outline">
+                                    <Button className="w-full border-primary/20 text-primary hover:bg-primary/5 hover:text-primary" variant="outline">
                                         View Details
                                     </Button>
                                 </CardContent>

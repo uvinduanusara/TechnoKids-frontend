@@ -41,13 +41,13 @@ export default function Login() {
   };
 
   return (
-    <div className="flex h-screen items-center justify-center bg-zinc-950 p-4">
-      <Card className="w-full max-w-sm bg-zinc-900 border-zinc-800 text-zinc-100">
+    <div className="flex h-screen items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-sm bg-card border-border text-card-foreground shadow-lg">
         <CardHeader className="space-y-1 text-center">
-          <CardTitle className="text-3xl font-bold tracking-tight text-blue-500">
+          <CardTitle className="text-3xl font-bold tracking-tight text-primary">
             TechnoKids
           </CardTitle>
-          <CardDescription className="text-zinc-400">
+          <CardDescription className="text-muted-foreground">
             Enter your credentials to access the exam portal
           </CardDescription>
         </CardHeader>
@@ -60,7 +60,7 @@ export default function Login() {
                 type="text"
                 placeholder="Enter your Username"
                 required
-                className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                className="bg-background border-input focus-visible:ring-primary"
                 onChange={(e) => setUsername(e.target.value)}
               />
             </div>
@@ -71,7 +71,7 @@ export default function Login() {
                 type="password"
                 placeholder="Enter your Password"
                 required
-                className="bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                className="bg-background border-input focus-visible:ring-primary"
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
@@ -80,7 +80,7 @@ export default function Login() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-all"
+              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold transition-all"
             >
               {isLoading ? "Authenticating..." : "Login"}
             </Button>

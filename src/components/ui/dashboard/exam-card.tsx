@@ -57,7 +57,7 @@ export function ExamCard({
       <div className="space-y-2">
         {status === "draft" && (
           <p className="text-xs text-muted-foreground">
-            Status: <span className="text-amber-600 font-medium">Not Scheduled</span>
+            Status: <span className="text-[#FF6B6B] font-medium">Not Scheduled</span>
           </p>
         )}
         {status === "in-progress" && (
@@ -69,7 +69,7 @@ export function ExamCard({
             {progress !== undefined && (
               <div className="w-full bg-muted rounded-full h-1.5">
                 <div
-                  className="bg-emerald-500 h-1.5 rounded-full"
+                  className="bg-accent h-1.5 rounded-full"
                   style={{ width: `${progress}%` }}
                 />
               </div>

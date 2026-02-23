@@ -108,10 +108,10 @@ export default function CreateExam() {
                 </Button>
             </div>
 
-            <Card className="bg-zinc-900 border-zinc-800 text-zinc-100">
+            <Card className="bg-card border-border text-foreground shadow-sm">
                 <CardHeader>
                     <CardTitle>Exam Details</CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-muted-foreground">
                         Fill in the details regarding the new exam.
                     </CardDescription>
                 </CardHeader>
@@ -124,7 +124,7 @@ export default function CreateExam() {
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="e.g. Mid-Term Mathematics"
-                                className="bg-zinc-800 border-zinc-700"
+                                className="bg-background border-input"
                                 required
                             />
                         </div>
@@ -136,17 +136,17 @@ export default function CreateExam() {
                                 value={description}
                                 onChange={(e: any) => setDescription(e.target.value)}
                                 placeholder="Brief description of the exam..."
-                                className="bg-zinc-800 border-zinc-700 min-h-[100px]"
+                                className="bg-background border-input min-h-[100px]"
                             />
                         </div>
 
                         <div className="space-y-2">
                             <Label htmlFor="course">Course</Label>
                             <Select value={courseId} onValueChange={setCourseId} required>
-                                <SelectTrigger className="w-full bg-zinc-800 border-zinc-700">
+                                <SelectTrigger className="w-full bg-background border-input">
                                     <SelectValue placeholder="Select a course" />
                                 </SelectTrigger>
-                                <SelectContent className="bg-zinc-800 border-zinc-700 text-white">
+                                <SelectContent className="bg-popover border-border text-popover-foreground">
                                     {isLoadingCourses ? (
                                         <SelectItem value="loading" disabled>
                                             Loading courses...
@@ -163,7 +163,7 @@ export default function CreateExam() {
                         </div>
 
                         <div className="space-y-4 pt-4">
-                            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
+                            <div className="flex items-center justify-between border-b border-border pb-2">
                                 <h3 className="text-xl font-semibold">Questions</h3>
                                 <Button
                                     type="button"
@@ -180,14 +180,14 @@ export default function CreateExam() {
                                 {questions.map((q, qIndex) => (
                                     <Card
                                         key={qIndex}
-                                        className="bg-zinc-950 border-zinc-800 border relative overflow-hidden"
+                                        className="bg-muted/30 border-border border relative overflow-hidden"
                                     >
                                         <div className="absolute top-0 right-0 p-4">
                                             <Button
                                                 type="button"
                                                 variant="ghost"
                                                 size="icon"
-                                                className="text-zinc-500 hover:text-red-500 hover:bg-zinc-900"
+                                                className="text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                                                 onClick={() => handleRemoveQuestion(qIndex)}
                                             >
                                                 <Trash2 className="w-5 h-5" />
@@ -202,7 +202,7 @@ export default function CreateExam() {
                                                         handleQuestionChange(qIndex, "text", e.target.value)
                                                     }
                                                     placeholder="Enter the question text"
-                                                    className="bg-zinc-800 border-zinc-700"
+                                                    className="bg-background border-input"
                                                     required
                                                 />
                                             </div>
@@ -220,7 +220,7 @@ export default function CreateExam() {
                                                             parseInt(e.target.value)
                                                         )
                                                     }
-                                                    className="bg-zinc-800 border-zinc-700 w-32"
+                                                    className="bg-background border-input w-32"
                                                     required
                                                 />
                                             </div>
@@ -245,7 +245,7 @@ export default function CreateExam() {
                                                                             oIndex
                                                                         )
                                                                     }
-                                                                    className="w-4 h-4 text-blue-600 bg-zinc-800 border-zinc-700 focus:ring-blue-500"
+                                                                    className="w-4 h-4 text-primary bg-background border-input focus:ring-primary"
                                                                     title="Mark as correct answer"
                                                                 />
                                                             </div>
@@ -259,8 +259,8 @@ export default function CreateExam() {
                                                                     )
                                                                 }
                                                                 placeholder={`Option ${oIndex + 1}`}
-                                                                className={`bg-zinc-800 border-zinc-700 transition-all ${q.correctAnswer === oIndex
-                                                                    ? "border-blue-500 ring-1 ring-blue-500 bg-blue-500/10"
+                                                                className={`bg-background border-input transition-all ${q.correctAnswer === oIndex
+                                                                    ? "border-primary ring-1 ring-primary bg-primary/10"
                                                                     : ""
                                                                     }`}
                                                                 required
@@ -275,11 +275,11 @@ export default function CreateExam() {
                             </div>
                         </div>
                     </CardContent>
-                    <CardFooter className="flex justify-end border-t border-zinc-800 pt-6">
+                    <CardFooter className="flex justify-end border-t border-border pt-6">
                         <Button
                             type="submit"
                             disabled={isLoading}
-                            className="bg-blue-600 hover:bg-blue-700 min-w-[150px]"
+                            className="bg-primary hover:bg-primary/90 min-w-[150px]"
                         >
                             {isLoading ? "Creating Exam..." : "Create Exam"}
                         </Button>
